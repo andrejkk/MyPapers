@@ -1,0 +1,69 @@
+SELECT UserId, AVG( Rating ) AS avg, STD( Rating ) AS std, COUNT( * ) AS num_ratings
+FROM (
+
+SELECT UserId, Rating, Genre1, Genre2, Genre3
+FROM data, users, itemmetadata2
+WHERE users.id = data.UserId
+AND itemmetadata2.ItemId = data.ItemId
+) AS a
+WHERE (
+Genre1 =  "COMEDY"
+OR Genre2 =  "COMEDY"
+OR Genre3 =  "COMEDY"
+)
+GROUP BY UserId
+
+
+======
+
+select Genre1, count(*) as count FROM (
+    SELECT UserId, Rating, Genre1, Genre2, Genre3 
+FROM 	data,users,itemmetadata2
+    WHERE users.id=data.UserId
+    AND itemmetadata2.ItemId=data.ItemId
+) as a
+group by Genre1
+order by count
+
+=======
+
+select 
+UserId,
+AVG(genre_romance) as avg_romance,
+STD(genre_romance) as std_romance,
+COUNT(genre_romance) as count_romance,
+
+AVG(genre_drama) as avg_drama,
+STD(genre_drama) as std_drama,
+COUNT(genre_drama) as count_drama,
+
+AVG(genre_comedy) as avg_comedy,
+STD(genre_comedy) as std_comedy,
+COUNT(genre_comedy) as count_comedy,
+
+AVG(genre_horror) as avg_horror,
+STD(genre_horror) as std_horror,
+COUNT(genre_horror) as count_horror,
+
+AVG(genre_action) as avg_action,
+STD(genre_action) as std_action,
+COUNT(genre_action) as count_action,
+
+AVG(genre_scifi) as avg_scifi,
+STD(genre_scifi) as std_scifi,
+COUNT(genre_scifi) as count_scifi
+
+FROM (
+SELECT 
+	UserId, 
+        case when (Genre1="Romance" OR Genre2="Romance" OR Genre3="Romance") then Rating end as genre_romance,
+        case when (Genre1="Drama" OR Genre2="Drama" OR Genre3="Drama") then Rating else null end as genre_drama,
+        case when (Genre1="Comedy" OR Genre2="Comedy" OR Genre3="Comedy") then Rating else null end as genre_comedy,
+        case when (Genre1="Horror" OR Genre2="Horror" OR Genre3="Horror") then Rating else null end as genre_horror,
+        case when (Genre1="Action" OR Genre2="Action" OR Genre3="Action") then Rating else null end as genre_action,
+        case when (Genre1="Sci-Fi" OR Genre2="Sci-Fi" OR Genre3="Sci-Fi") then Rating else null end as genre_scifi
+FROM data, users, itemmetadata2
+WHERE users.id = data.UserId
+AND itemmetadata2.ItemId = data.ItemId
+) as a
+GROUP BY UserId

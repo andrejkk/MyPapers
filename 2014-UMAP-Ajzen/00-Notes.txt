@@ -1,0 +1,8 @@
+Matija:
+ - Pri prileganju modela podatkom: ali je TPB model fiting, TPB model trainig, Ajzen model ...
+ 
+ 
+Literature:
+ - en èlanek za life style studies
+ - en èlanek survey human decission modeling 
+ - 

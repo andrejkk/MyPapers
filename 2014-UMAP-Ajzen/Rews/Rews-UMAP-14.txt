@@ -1,0 +1,127 @@
+ToDo:
+Rew1
+ - rgenre selection is expected to be influenced by social norms ... "social norms or self efficacy would have an impact on those kinds of preferences";
+ - explain how R^2 was agregated: it was computed for regressed variables;
+ - list questionarie
+ - list betas
+ 
+Rew2
+ - TPB is for behavour change: what change do we have here?
+ - separability of modeled behaviors? Explain!
+ - rather get into the computational aspects of the work?
+
+Rew3 
+ - show correlation matrix between the questions;
+ - "The number “49” of questions in the TPB questionnaires is right?
+I guess that the notation “(XX)” in section 3.2 indicates the number of questions of each section.  If it is right, then, we got  (38) + (2) + (7) + (3) = 50."
+ - It is not clear that the following calculation in section 3.3 is reasonable:
+	gS(u, Drama) = 45/(3·91) = 0.165 .
+From the meaning of the formula, the gS should be calculated by the following equation:
+	gS(u, Drama) = (rating number of Drama)/(rating number of all genre) = 45/91 .
+Would you explain these reasons why you multiply the number of all genre by 3?
+ 
+
+----------------------- REVIEW 1 ---------------------
+PAPER: 30
+TITLE: Theory of Planned Behavior in user modeling: motivation, procedure and and example application
+AUTHORS: Andrej Kosir, Ante Odiæ, Marko Tkalèiè and Matija Svetina
+
+OVERALL EVALUATION: -2 (reject)
+REVIEWER'S CONFIDENCE: 5 (expert)
+CLASSIFICATION: WHAT KIND OF SUBMISSION IS SHOULD THIS SUBMISSION BE TO YOUR OPINION?: 4 (long research paper (susbtantive new research))
+CLASSIFICATION: WHAT IS THE MAIN CONFERENCE AREA OF THIS SUBMISSION (SEE UMAP 2014 WEBSITE FOR DETAILS)?: 5 (human factors and models)
+CLASSIFICATION: WHAT IS THE MAIN TOPIC OF THIS SUBMISSION?: 8 (recommender systems)
+RELEVANCE: WILL THIS SUBMISSION BE OF INTEREST TO CONFERENCE ATTENDEES?: from 1 (lowest) to 5 (highest): 2 (of little interest to attendees)
+NOVELTY: IS THIS A NEW AND ORIGINAL CONTRIBUTION TO UMAP?: from 1 (lowest) to 5 (highest): 2 (little that is new or innovative)
+TECHNICAL SOUNDNESS: IS THE PAPER SOUND AND ACCURATE IN ITS  CONTENT?: from 1 (lowest) to 5 (highest): 2 (poor)
+PRESENTATION: IS THE PAPER CLEAR, EXPLICIT, AND WELL-ORGANISED?: from 1 (lowest) to 5 (highest): 2 (poor and sometimes hard to follow)
+EVALUATION: DOES THE PAPER INCLUDE AN EVALUATION OF THE WORK: from 1 (lowest) to 5 (highest): 4 (much better evaluation needed)
+SIGNIFICANCE: HOW IMPORTANT ARE THE FINDINGS, RESULTS, AND CONCLUSIONS?: from 1 (lowest) to 5 (highest): 2 (of little significance)
+RELATED WORK: DOES THE PAPER ADEQUATELY REFER TO RELATED WORK?: from 1 (lowest) to 5 (highest): 2 (generally ok but some references are missing)
+
+----------- REVIEW -----------
+I am very sympathetic to the type of work suggested in the paper. I think recommender systems can be much improved with good models of human behavior. Especially, we can learn a lot about why recommenders work or don't work when we understand the reasons for why people behave the way they do. And for this we need good models of human behavior.
+
+As laudable as the attempt may be, I think the paper should be rejected for the following reasons:
+
+(1) First and foremost, the Theory of Planned Behavior was meant to model planned behavior. In Psychology it has been mainly applied to behavior change (such as adopting a healthy lifestyle), but there are to my knowledge no applications of TBP to simple consumer preferences that are mainly driven by attitudes towards the products. So to stay with the example, TPB might be appropriate for predicting why I rather stay home to write a paper than go to the movies. But it was not designed to predict my movie genre preferences. I fail to see how social norms or self efficacy would have an impact on those kinds of preferences. 
+
+(2) We could learn from the author's survey instrument how they have constructed this link. However, the instrument is not actually provided in the paper. If the paper wanted to contribute a theory-driven approach to model human behavior, then the survey instrument is one of the central contributions. Without this, it is hard to see how the results go beyond a regression model of some answers to an unknown questionnaire that predict some user preferences. From the examples that are given (how important is the actor?) I fail to see any connection to the TBP constructs. 
+
+(3) There are several methodological weaknesses that undermine the results. I would suggest to report also intercorrelations of the predictors. Because if the intercorrelations are substantial, then the beta weights are very unstable and should be interpreted with caution. Also I don't quite understand why so many nested models were tested, and which model the R^2 of the "aggregated model" exactly refers to, or how the R^2 was aggregated. Also it seems the authors have just used single items of their questionnaire as predictors which is questionable because of usually low reliability.
+
+
+----------------------- REVIEW 2 ---------------------
+PAPER: 30
+TITLE: Theory of Planned Behavior in user modeling: motivation, procedure and and example application
+AUTHORS: Andrej Kosir, Ante Odiæ, Marko Tkalèiè and Matija Svetina
+
+OVERALL EVALUATION: 0 (borderline paper)
+REVIEWER'S CONFIDENCE: 4 (high)
+CLASSIFICATION: WHAT KIND OF SUBMISSION IS SHOULD THIS SUBMISSION BE TO YOUR OPINION?: 4 (long research paper (susbtantive new research))
+CLASSIFICATION: WHAT IS THE MAIN CONFERENCE AREA OF THIS SUBMISSION (SEE UMAP 2014 WEBSITE FOR DETAILS)?: 7 (UMAP in the social era)
+CLASSIFICATION: WHAT IS THE MAIN TOPIC OF THIS SUBMISSION?: 8 (recommender systems)
+RELEVANCE: WILL THIS SUBMISSION BE OF INTEREST TO CONFERENCE ATTENDEES?: from 1 (lowest) to 5 (highest): 3 (marginally of interest to attendees)
+NOVELTY: IS THIS A NEW AND ORIGINAL CONTRIBUTION TO UMAP?: from 1 (lowest) to 5 (highest): 4 (good)
+TECHNICAL SOUNDNESS: IS THE PAPER SOUND AND ACCURATE IN ITS  CONTENT?: from 1 (lowest) to 5 (highest): 2 (poor)
+PRESENTATION: IS THE PAPER CLEAR, EXPLICIT, AND WELL-ORGANISED?: from 1 (lowest) to 5 (highest): 5 (excellent)
+EVALUATION: DOES THE PAPER INCLUDE AN EVALUATION OF THE WORK: from 1 (lowest) to 5 (highest): 5 (good evaluation, but could be improved)
+SIGNIFICANCE: HOW IMPORTANT ARE THE FINDINGS, RESULTS, AND CONCLUSIONS?: from 1 (lowest) to 5 (highest): 4 (some aspects may be significant)
+RELATED WORK: DOES THE PAPER ADEQUATELY REFER TO RELATED WORK?: from 1 (lowest) to 5 (highest): 4 (adequate references for a conference paper)
+
+----------- REVIEW -----------
+This paper presents an application of the Theory of Planned Behavior to the movie recommendation problem. Using a direct mapping of Ajzen's model to the problem, the authors present an experiment that shows good accuracy in predicting movie preferences. The authors conclude with a discussion of the applicability of TPB, how to determine if it applicable to a given situation, and the general benefits of doing so.
+
+I generally liked this paper and the intent behind it. It is easy to understand and follow, the experiment is well conceived, although this kind of study generally needs a larger sample size (like the netflix-based research has). The discussion is thoughtful and the authors provide what I see as a fairly objective conclusion. 
+
+Unfortunately, the theoretical and practical use of TPB in this situation is suspect. It is a popular theory for behavior change research, as I'm sure the authors are aware, which is not aligned well at all for this task domain. The paper needs a very strong argument for why this is OK. I am admittedly ignorant of much of the TPB/behavior change literature, but if there could be a little more said about it up front, I think that would help. I see no real role for behavior change here (unless we want to try and influence movie choices - kind of strange), so this was nagging me the whole time. I do however find myself uncomfortable criticizing the surprising application of a theory that nobody would think of for a specific problem - this is creative and the result that it worked surprising. Was it luck? Or does its connection to behavior change mean nothing (i.e., just from a raw computational standpoint it worked))?  Anyway, there is much to resolve in terms of justifying the 
+approach.
+
+I am also unsure about the separability of modeled behaviors. How serious of a problem is this? Is there anything in the TPB literature addressing this question?  My instinct is that human behavior is usually more complex than it is simple, so this is probably not a limitation to dismiss.
+
+
+In sum, it is a nice paper and I think has some potential. But as it is written now, it needs to deflect these concerns more carefully or drop the heavy focus on TPB and rather get into the computational aspects of the work.
+
+minor typo:  p.9 "he" in section 5.
+
+
+----------------------- REVIEW 3 ---------------------
+PAPER: 30
+TITLE: Theory of Planned Behavior in user modeling: motivation, procedure and and example application
+AUTHORS: Andrej Kosir, Ante Odiæ, Marko Tkalèiè and Matija Svetina
+
+OVERALL EVALUATION: 0 (borderline paper)
+REVIEWER'S CONFIDENCE: 3 (medium)
+CLASSIFICATION: WHAT KIND OF SUBMISSION IS SHOULD THIS SUBMISSION BE TO YOUR OPINION?: 3 (long experience paper (substantive in-use case for UMAP research))
+CLASSIFICATION: WHAT IS THE MAIN CONFERENCE AREA OF THIS SUBMISSION (SEE UMAP 2014 WEBSITE FOR DETAILS)?: 5 (human factors and models)
+CLASSIFICATION: WHAT IS THE MAIN TOPIC OF THIS SUBMISSION?: 8 (recommender systems)
+RELEVANCE: WILL THIS SUBMISSION BE OF INTEREST TO CONFERENCE ATTENDEES?: from 1 (lowest) to 5 (highest): 4 (of interest to a majority of attendees)
+NOVELTY: IS THIS A NEW AND ORIGINAL CONTRIBUTION TO UMAP?: from 1 (lowest) to 5 (highest): 3 (cannot judge the novelty)
+TECHNICAL SOUNDNESS: IS THE PAPER SOUND AND ACCURATE IN ITS  CONTENT?: from 1 (lowest) to 5 (highest): 4 (good)
+PRESENTATION: IS THE PAPER CLEAR, EXPLICIT, AND WELL-ORGANISED?: from 1 (lowest) to 5 (highest): 4 (good but can be improved)
+EVALUATION: DOES THE PAPER INCLUDE AN EVALUATION OF THE WORK: from 1 (lowest) to 5 (highest): 4 (much better evaluation needed)
+SIGNIFICANCE: HOW IMPORTANT ARE THE FINDINGS, RESULTS, AND CONCLUSIONS?: from 1 (lowest) to 5 (highest): 3 (cannot judge the significance)
+RELATED WORK: DOES THE PAPER ADEQUATELY REFER TO RELATED WORK?: from 1 (lowest) to 5 (highest): 4 (adequate references for a conference paper)
+
+----------- REVIEW -----------
+Very interesting paper.
+
+However there are some unclear points as follows. The authors should revise according to these points.
+
+1.
+The authors should show correlation matrix between the questions, because we have to pay attention to multicollinearity when we use MVR.
+
+
+2.
+The number “49” of questions in the TPB questionnaires is right?
+I guess that the notation “(XX)” in section 3.2 indicates the number of questions of each section.  If it is right, then, we got  (38) + (2) + (7) + (3) = 50.
+Please check it.
+
+
+3.
+It is not clear that the following calculation in section 3.3 is reasonable:
+	gS(u, Drama) = 45/(3·91) = 0.165 .
+From the meaning of the formula, the gS should be calculated by the following equation:
+	gS(u, Drama) = (rating number of Drama)/(rating number of all genre) = 45/91 .
+
+Would you explain these reasons why you multiply the number of all genre by 3?

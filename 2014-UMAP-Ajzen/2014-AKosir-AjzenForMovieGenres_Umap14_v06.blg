@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: 2014-AKosir-AjzenForMovieGenres_Umap14_v06.aux
+The style file: splncs03.bst
+Database file #1: rs_allbib.bib
+I was expecting a `,' or a `}'---line 10 of file rs_allbib.bib
+ : title = Movie 
+ :               Recommendations based in explicit and implicit features extracted from the Filmtipset dataset},
+I'm skipping whatever remains of this entry
+Warning--entry type for "CoMoDa2009" isn't style-file defined
+--line 3945 of file rs_allbib.bib
+Warning--entry type for "AjzenWebPage" isn't style-file defined
+--line 3954 of file rs_allbib.bib
+Repeated entry---line 3961 of file rs_allbib.bib
+ : @misc{Ajzen1991
+ :                ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4009 of file rs_allbib.bib
+ : @article{pazzani2007content
+ :                            ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4025 of file rs_allbib.bib
+ : @inproceedings{resnick1994grouplens
+ :                                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4034 of file rs_allbib.bib
+ : @inproceedings{fernandez2012cross
+ :                                  ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4040 of file rs_allbib.bib
+ : @inproceedings{bennett2007netflix
+ :                                  ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4049 of file rs_allbib.bib
+ : @incollection{Koren2008factorization
+ :                                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4088 of file rs_allbib.bib
+ : @article{balabanovic1997fab
+ :                            ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4130 of file rs_allbib.bib
+ : @online{CoMoDa2009
+ :                   ,
+I'm skipping whatever remains of this entry
+Warning--empty booktitle in fernandez2012cross
+Warning--missing publisher in Koren2008factorization
+Warning--empty journal in Lee2011
+(There were 9 error messages)

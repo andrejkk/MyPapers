@@ -1,0 +1,109 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+
+\bibitem{AjzenWebPage}
+Ajzen, I.: \mbox{TPB} homepage, accessed 10.01.2014.,
+  \url{http://people.umass.edu/aizen/index.html}
+
+\bibitem{Ajzen1991}
+Ajzen, I.: {The theory of planned behavior}. Organizational Behavior and Human
+  Decision Processes  50(2),  179--211 (Dec 1991)
+
+\bibitem{Ajzen2008}
+Ajzen, I.: {Consumer attitudes and behavior}. In: Curtis, Paul, Frank (eds.)
+  Handbook of consumer psychology, pp. 525--548. Lawrence Erlbaum Associates
+  (2008)
+
+\bibitem{Ajzen2007}
+Ajzen, I., Manstead, A.S.R.: {Changing health-related behaviours: An approach
+  based on the theory of planned behaviour}. In: Hewstone, M., Schut, H.A.W.,
+  {De Wit}, J.B.F., {Van Den Bos}, K., Stroebe, M.S. (eds.) The scope of social
+  psychology: Theory and applications, pp. 43--63. Psychology Press (2007)
+
+\bibitem{balabanovic1997fab}
+Balabanovi{\'c}, M., Shoham, Y.: Fab: content-based, collaborative
+  recommendation. Communications of the ACM  40(3),  66--72 (1997)
+
+\bibitem{Bamberg2003}
+Bamberg, S., Ajzen, I., Schmidt, P.: {Choice of Travel Mode in the Theory of
+  Planned Behavior: The Roles of Past Behavior, Habit, and Reasoned Action}
+  (2003)
+
+\bibitem{bennett2007netflix}
+Bennett, J., Lanning, S.: The netflix prize. In: Proceedings of KDD Cup and
+  Workshop. vol. 2007, p.~35 (2007)
+
+\bibitem{Daigle2002}
+Daigle, J.J., Hrubes, D., Ajzen, I.: {A Comparative Study of Beliefs,
+  Attitudes, and Values Among Hunters, Wildlife Viewers, and Other Outdoor
+  Recreationists} (2002)
+
+\bibitem{Davis2002}
+Davis, L.E., Ajzen, I., Saunders, J., Williams, T.: {The decision of African
+  American students to complete high school: An application of the theory of
+  planned behavior.} (2002)
+
+\bibitem{Dewberry2013}
+Dewberry, C., Juanchich, M., Narendran, S.: {Decision-making competence in
+  everyday life: The roles of general cognitive styles, decision-making styles
+  and personality}. Personality and Individual Differences  55(7),  783--788
+  (Oct 2013)
+
+\bibitem{fernandez2012cross}
+Fern{\'a}ndez-Tob{\'\i}as, I., Cantador, I., Kaminskas, M., Ricci, F.:
+  Cross-domain recommender systems: A survey of the state of the art (2012)
+
+\bibitem{Fraser2010}
+Fraser, R.T., Johnson, K., Hebert, J., Ajzen, I., Copeland, J., Brown, P.,
+  Chan, F.: {Understanding employers' hiring intentions in relation to
+  qualified workers with disabilities: preliminary findings.} Journal of
+  occupational rehabilitation  20(4),  420--426 (2010)
+
+\bibitem{IcekAjzen2011}
+{Icek Ajzen}, I.A.: {Job Satisfaction, Effort, and Performance: A Reasoned
+  Action Perspective} (2011)
+
+\bibitem{Koren2008factorization}
+Koren, Y.: {Factorization Meets the Neighborhood : a Multifaceted Collaborative
+  Filtering Model}. In: Proceeding of the 14th ACM SIGKDD international
+  conference on Knowledge discovery and data mining, pp. 426--434 (2008)
+
+\bibitem{CoMoDa2009}
+LDOS: Comoda context rich movie recommender dataset (Jul 2009),
+  \url{http://212.235.187.145/spletnastran/raziskave/um/comoda/comoda.php}
+
+\bibitem{Lee2011}
+Lee, J., Lee, M.: {Factors Influencing the Intention to Watch Online Video
+  Advertising}  (Oct 2011)
+
+\bibitem{Lin2011}
+Lin, F.R., Lu, I.Y., Hsieh, P.S.: {Understanding the Adoption of Wireless
+  Sensor Network Service in Households}. In: 2011 International Joint
+  Conference on Service Sciences. pp. 218--222. IEEE (May 2011)
+
+\bibitem{pazzani2007content}
+Pazzani, M., Billsus, D.: Content-based recommendation systems. The adaptive
+  web pp. 325--341 (2007)
+
+\bibitem{RencherChristensen201207}
+Rencher, A.C., Christensen, W.F.: Methods of Multivariate Analysis (Wiley
+  Series in Probability and Statistics). Wiley, 3 edn. (7 2012)
+
+\bibitem{resnick1994grouplens}
+Resnick, P., Iacovou, N., Suchak, M., Bergstrom, P., Riedl, J.: Grouplens: an
+  open architecture for collaborative filtering of netnews. In: Proceedings of
+  the 1994 ACM conference on Computer supported cooperative work. pp. 175--186.
+  ACM (1994)
+
+\bibitem{Tetard2009}
+Tetard, F., Collan, M.: Lazy user theory: A dynamic model to understand user
+  selection of products and services. 2013 46th Hawaii International Conference
+  on System Sciences  0,  1--9 (2009)
+
+\bibitem{Walsh2008}
+Walsh, S.P., White, K.M., Hyde, M.K., Watson, B.: {Dialling and driving:
+  factors influencing intentions to use a mobile phone while driving.}
+  Accident; analysis and prevention  40(6),  1893--900 (Nov 2008)
+
+\end{thebibliography}

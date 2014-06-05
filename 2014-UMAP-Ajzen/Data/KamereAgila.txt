@@ -1,0 +1,20 @@
+Links:
+ SLO: http://www.optomotive.com/software
+ Zelo uspešni: http://www.vision-components.com/, posebej http://www.vision-components.com/en/products/software/vc-smart-finder/
+ Odlièna podpora za nadaljnji razvoj: http://www.ximea.com/en/machine-vision/smart-camera?gclid=CJPEi7jihLwCFQsCwwodJ34AIw
+ Low budget: http://tldvision.com/. LEarning zmožnost je morda ugodna za vašo aplikacijo.  
+
+ Final products: http://www.alibaba.com/product-gs/609093402/Home_Surveillance_Camera_with_Intelligent_Analysis.html
+ Final product: https://www.youtube.com/user/ICECgroupco
+
+ Koroški inštitut z lastnimi produkti: http://www.ctr.at/home.html
+ 
+ Imam posredno osebno povezavo: http://www.videosystems.it/en/Principale/Sensors_for_the_steel_industry/Sensors_for_the_steel_industry.aspx
+
+ Za face detection: 
+	http://www.ximea.com/en/machine-vision/smart-camera
+	http://www.nec.com/en/global/solutions/security/products/face_recognition.html
+
+ 
+Papers:
+ - murovec

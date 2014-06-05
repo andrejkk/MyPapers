@@ -1,0 +1,551 @@
+\documentclass{llncs}
+ 
+%% 
+% Tasks:
+% Ante:
+% - SOTA RS and Pervasive 
+% Matija:
+% - read procedure
+% - lifestyle research 
+% Marko: 
+% - Ang, overall comments
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{changes}
+
+ \def\a{{\alpha}}
+ \def\b{{\beta}}
+ \def\gS{{\mbox{gS}}}
+ \def\gC{{\mbox{gC}}}
+ \def\Id{{\mbox{Id}}}
+
+\begin{document}
+\frontmatter  
+\addtocmark{Contextual personalization}
+\mainmatter 
+
+\title{Human decisions in user modeling: motivation, procedure and example application}
+
+\titlerunning{TPB in user modeling}  
+\author{Andrej Košir$^1$ \and Ante Odić$^2$ \and Marko Tkalčič$^3$ \and Matija Svetina$^4$}
+
+\authorrunning{Andrej Košir et. al.}
+\tocauthor{Andrej Košir,  Ante Odić, Marko Tkalčič, Matija Svetina}
+
+\institute{University of Ljubljana, Faculty of electrical engineering\\
+Tržaška 25, 1000 Ljubljana, Slovenia\\
+\email{andrej.kosir@fe.uni-lj.si},
+\and
+OutFit 7 (Slovenian subsidiary Ekipa2 d.o.o.), \\
+Ameriška 8, 1000 Ljubljana, Slovenia \\
+\email{ante.odic@outfit7.com},
+\and
+Johannes Kepler University\\
+Altenberger Strasse 69, 4040 Linz, Austria\\
+\email{marko.tkalcic@jku.at}
+\and
+University of Ljubljana, Faculty of arts\\
+Tržaška 2, 1000 Ljubljana, Slovenia\\
+\email{m.svetina@ff.uni-lj.si}}
+  
+\maketitle            
+
+\begin{abstract}
+The aim of this study was to investigate the use and potential of the psychological theory of human-behavior modeling, called the Theory of Planned Behavior (TPB), in a user-modeling domain. We performed a user experiment involving a well-studied problem of user modeling, i.e., a recommender system (RS) for movies. As a part of the TPB, a survey to estimate the behavioral, normative and control beliefs regarding movie selection was designed. Using the participants’ responses an Ajzen model for movie genres was built and evaluated. An existing public dataset for context-aware movie recommendation, CoMoDa, was used to evaluate the proposed method. The results showed that the TPB approach led to an interesting explanation of movie genre selection. Among others, the potential applications of the TPB in recommender systems and the architecture of such a RS were addressed. Questions about the potential applications of the TPB in the user-modeling domain and its limitations and drawbacks were discussed.
+\keywords{Theory of planned behavior, Behavior interpretation, Recommender system}
+\end{abstract}
+
+\section{Introduction}\label{Sec_Intro} 
+
+User-modeling and user-adaptation techniques have received much attention in recent decades as a way to tackle the problem of human-computer interaction across a broad range of communication services. Recommender systems, as an element of this user modeling, are today a part of most services that involve content or service selection made by end users. Many user-adaptation tasks can be seen as a problem of the effective recommendation of a predefined set of entities. Several different directions of algorithm are under development due to the fact that effective user adaptation is very much dependent on the domain of recommendations. However, several drawbacks of the existing user-modeling techniques are only partially solved, such as the problem of intrusive end-user data acquisition, end-user privacy protection, the problem of diversity of the RS, etc.
+
+%One direction for addressing these issues is to predict the end user’s behavior while he/she is interacting with the service and then utilize such a prediction in the user adaptation. 
+
+Human-behavior modeling has been an intensive research field in psychology for several decades. The Theory of Planned Behavior \cite{AjzenWebPage} is particularly appealing in user modeling and adaptation for several reasons. First, the behavior model is relatively easily interpreted in several domains in such a way that the available domain knowledge can be utilized. Second, the procedure of building the Ajzen model for a given domain is a well-defined procedure (we present it in Sec. \ref{Sec_AzenProc}). Third, the prediction model is not predefined but can be selected according to the domain knowledge. Fourth, there are a large number of modeling cases providing rich past experiences resulting in effective modeling guidelines.
+
+We present the procedure for Ajzen model building, including how to select predefined behaviors and demonstrate the model on a dataset of real users. We discuss the potential of this type of psychological modeling of human behavior in user-adaptation procedures. The discussion also addresses the constraints and issues of further development with regard to the implementation of the TPB into the RS.
+
+
+\subsection{Related work}\label{SubSec_RelatedWork}
+
+The usual reasoning in RS procedures is to build the model of a user $u$ according to his/her past treatment of the domain items $h$. These items are multimedia-content items, tourist destinations, selected food, etc. 
+%These models are built according to the user history related to these items (content based), according to the history of the users, similar to the users   (collaborative based), or a combination of these two approaches (hybrid). 
+No underlying mechanisms that govern the user’s interaction with the system are normally taken into account. For example, the Netflix prize-winning algorithm Matrix Factorization (MF) has no model of users or items that is based on the users or item features (metadata).
+
+
+\subsubsection{Recommender systems}\label{SubSubSec_RS}
+
+The main goal of RSs is to predict ratings for items that the user has not yet consumed. Based on these predicted ratings, suitable items (those with high predicted ratings) are selected and provided as the recommendations. 
+
+Content-based (CB) recommender systems  \cite{pazzani2007content} analyze the items’ descriptions in order to learn the user’s preference for specific types of items. The prediction of the unseen item is based on ratings for similar items provided by the same user. %There are many limitations of CB systems: the system depends on metadata that has to be explicitly associated with each item; over-specialization due to the item-similarity paradigm; the users are not given serendipitous recommendations and the user is held in the so-called "filter bubble" \cite{pariser2011filter}.
+In Collaborative Filtering (\textbf{CF}) strategies the prediction of the unseen item is based on the opinion of users with similar tastes  \cite{resnick1994grouplens}. This approach ignores the items' metadata, so cross-domain recommendations are possible (e.g., books, movies, music, etc.) by employing cross-domain techniques \cite{fernandez2012cross}. After the Netflix prize competition \cite{bennett2007netflix}, Matrix Factorization has become a popular CF technique \cite{Koren2008factorization}. %, koren2009matrix}. 
+However, according to \cite{balabanovic1997fab}, for the user whose tastes are unusual compared to the population, the similarity compared to other users will be poor, which will result in poor recommendations for such a user. %Knowledge-based (\textbf{KB}) systems use knowledge from the domain expert in order to prepare meaningful recommendations  \cite{schafer1999recommender}. However, pure KB systems are not popular and widely used, since they are expensive due to the required input from the domain expert. In order to overcome the different problems with the CF and CB strategies, they are sometimes combined into a hybrid RS \cite{burke2007hybrid}. 
+
+%Furthermore, some context-aware techniques actually fall into the hybrid-system strategies, since the basic rating prediction can be made in one way and later adapted by the contextualization, e.g., post-filtering contextualization  \cite{Adomavicius2011}. 
+
+This kind of model construction has a number of constraints. One way to address these issues is to gain additional knowledge with regard to the underlying mechanisms of the user’s interaction with the system. %For example, the design of effective pervasive systems typically requires an in-depth domain knowledge, including an understanding of the parameters and mechanisms of the user’s behavior practices. 
+One such model is the Lazy User Theory \cite{Tetard2009}. Here the authors developed a theory that the user will most often choose the solution that will fulfill his/her information needs with the least effort. Such an assumption allows us to explain selection factors using multivariate statistics, but it also assumes that a user has a clearly defined goal while seeking information. However, it seems that this simple and strong hypothesis is not valid in many situations of a user’s interaction with information systems due to the fact that modern users employ these systems with no specific goal. A different theory, i.e., TPB, seems more promising in this context. The theory and the rationale for applying it in the RS context are provided below. 
+
+
+\subsubsection{Theory of Planned Behavior (TPB)}\label{SubSubSec_TPB}
+
+ 
+The pioneering work on the Theory of Planned Behavior was carried out by Icek Ajzen \cite{Ajzen1991}, and so the model suggested by the TPB is usually called the Ajzen model. 
+
+The Ajzen model was introduced as a complete model for explaining human behavior and is based on a large number of behavior studies. According to the TPB, human behaviors are influenced by attitudes towards their behavior, by subjective norms regarding their behavior, and perceived behavior control \cite{Ajzen1991}. The structure of TPB is depicted at Fig. \ref{Fig_AggregModel} where the aggregated model is presented. Behavior is domain specific; in this study we selected the behavior as the selection of a movie with a given genre. Attitudes are beliefs that one person has about the outcomes of the behavior (seeing the selected movie) and are divided into cognitive, emotional and behavioral. Subjective norms are related to beliefs about the expectations of others and the wish to comply with them. Behavior control relates to the ability one has to perform the preselected behavior and this directly affects the decision about the behavior. 
+
+% \begin{figure}[h!]
+% \begin{center}
+%   \includegraphics[width=9cm]{TpbScheme.pdf}
+%   \caption[Fig_TPB]{A diagram of the Theory of Planned Behavior \cite{AjzenWebPage}.}
+%   \label{Fig_TPB}
+% \end{center}
+% \end{figure}
+ 
+There are several areas where human decision making is of key importance and which are exhaustively studied using TPB models, such as outdoor recreation activities \cite{Daigle2002}, decisions related to high-school studies \cite{Davis2002}, public-transport habits \cite{Bamberg2003}, health-related behavior \cite{Ajzen2007},  consumer attitudes and behavior \cite{Ajzen2008}, employers’ hiring intentions \cite{Fraser2010}, job satisfAction \cite{IcekAjzen2011}, adoption of wireless-sensor-network services in households \cite{Lin2011}, factors influencing the intention to watch online-video advertising \cite{Lee2011} and mobile-phone usage while driving a car \cite{Walsh2008}.%,\cite{Zhou2012}. 
+
+The common goal of these studies is not only to be able to predict human decisions but also to understand the underlying mechanism of these decisions. These explanations are then used to create a new theory or to modify existing ones in order to provide further insights into the targeted domain.
+
+%Extensive tutorials about how to effectively build and apply models of the TPB in practice are available on-line \cite{AjzenWebPage}.  A guide for conducting statistical analyses in a reasoned Action context is given in \cite{Bleakley2012}. Further research directions related to the TPB and the Ajzen model are surveyed in \cite{Jaccard2012}.
+
+
+
+
+\subsection{Problem statement}\label{SubSec_}
+
+The goal of this paper is to provide a rationale for using the Theory of Planned Behavior (TPB) in user-modeling applications. We present the background of the TPB and outline the procedures for the acquisition of the TPB parameters. As a proof-of-concept we present the results of an experiment where we used the TPB model in a recommender system for movies. Since the creating of a final version of the effective and valid questionnaire is beyond the scope of this preliminary work,  conclusions from the model are only partially valid. The TPB was meant to model planned behaviour and was, to our knowledge not yet used in predicting movie preferences. We address a new account in using psychological driven theory in user modeling. The present paper is an attempt to gain initial evaluation of such an approach.
+
+
+%In this research we address the problem of prediction of complex groups of items such as movie genres. We believe the underlying mechanisms of selection of such groups of items is more complex than the selection of individual item. Consequently it requires refined modeling of user decision making. When user selecting an item, end user undergoes several decision steps along different paths according to his motivation, past experience etc. To model these procedures we considered several user decision making models and select theory of planned behaviour known as Ajzen model \cite{Ajzen1991}.  
+
+
+\section{The procedure of model building}\label{Sec_AzenProc}
+
+We list below a procedure for TPB model building to collect the most relevant guidelines and potential errors for the UM community. 
+%There are two reasons why a crucial step of the model building is the selection (i.e., definition) of behaviors. The first one is the fact that the quality of the model is mainly limited by the selection of behaviors (details are given in step 1. below). The next one is that the selected behaviors also define the role of the modeling itself. These roles can vary from predicting groups of items, to the explanation of a specific aspect of the decision-making process. We evaluate this in Sec. \ref{Sec_Disc}.
+
+\begin{enumerate}
+ \item {\it Define a set of behaviors.} This is the most important step in the whole modeling task. Prior to it the reason why we apply the TPB must be clarified. In this paper’s given example the reason was to further understand the mechanisms of movie genre selection. We therefore assume that movie genre selection is influenced by cognitive, emotional and behavioral control, and by social norms. %Preliminary results showed that there are large variabilities among the users regarding the genres of the movies they select. 
+So we can expect that understanding the reasons for these variabilities would provide the insight that we can utilize to improve the accuracy of the user model in the movie recommender. 
+%If we defined the behaviors as the selection of a content item (each movie was associated with one behavior) we would gain no explanation. Besides, the model quality would be very low due to an inability to separate the behaviors. This observation leads to the second guideline, which is related to the quality of the model fitting. 
+The behaviors are required to be discriminable with reasonable user data. 
+%This means that the survey (see step 2.) used to acquire the user data is feasible, that it is short enough and clear enough. 
+%Also, it is clear that two behaviors that are the same in most of the end-user situations cannot be discriminable. For example, if two genres are both either present or not present in almost all the movies selected by users, these associated behaviors cannot be discriminable. To summarize, 
+The behavior definition should rely on an end-user data analysis and on the clear goal of the modeling itself.   
+ \item {\it TPB questionnaire construction.} The next step is to design a questionnaire for the end users in order to estimate the parameters of the model. It must meet the requirements set by the TPB. We group them into three groups with respect to: behavioral beliefs (about the consequences of the behavior), normative beliefs (about the expectations of others) and control beliefs (about factors that affect the performance of the behavior). Therefore, this construction requires an in-depth domain knowledge of the selected behaviors. The basis of all the questions is the defined behaviors (see step 1.). The next issue addressed is the specification of the end-user population. Five to six questions are then formulated to assess each of the constructs (attitude, norms, control and intention). 
+%For each question, the type of answer is selected. 
+%As usual, the next phase is administering a pilot questionnaire, its evaluation on a small population, followed by a standard questionnaire construction. 
+ \item {\it Select and build the prediction model.} According to the constructed questionnaire and the set of predefined behaviors, a prediction model is selected. First, the criteria variable indicating the true behavior is constructed. In our example of movie-genre selection, for the first criteria the variable is computed from the previous movie selection of the targeted end users (see Sub. \ref{SubSec_CritConstr}). For the second model, the criteria variable is simply the genre indicator of the most likely selected genre by this end user. Next, the model itself is selected. Typically, the first option considered is a multivariate linear regression model (MVR), if the predictor and criteria variables fit the requirements. Other options include linear discriminant analysis (LDA), the logit regression model, canonical regression, structural equation modeling, etc. In general, there is no limitation from the TPB imposed on the model selection. %For example, one could apply a neural network to model the relationship between the predictor and criteria variables. 
+However, the explanation power of the selected model also matters, since the interpretation of the fitted model may provide useful hints for a further improvement of the user-adaptation procedure. 
+ \item {\it Interpret the model.} The interpretation of the models is based on a standard interpretation of selected models. For instance, the linear-regression model is interpreted according to the sign and the magnitude of the estimated normalized model coefficients, etc. 
+%Again, the main aim of the model is: 1) to gain an additional insight into the mechanisms behind movie selections, and 2) to improve the performance of the RS (i.e. if a given question in user data acquisition is found non-relevant, we can omit it, according to the importance of the decision making of factors we can adopt the architecture of the RS etc.). 
+\end{enumerate}
+
+
+\section{Materials and Methods}\label{Sec_MatAndMeths}  
+
+\subsection{Participants}\label{SubSec_Participants}
+
+In our experiment we had 28 subjects, aged between 17 and 38 years old (18 males and 10 females). Each of the subjects filled in a TPB questionnaire using GDrive forms. The users were selected from contributors of the movie ratings in the contextual movie dataset CoMoDa  \cite{CoMoDa2009}.
+
+
+\subsection{Instruments}\label{SubSec_Instrum}
+
+The constructed TPB questionnaire consists of $49$ questions related to beliefs regarding movie selection and consumption according to the TPB and is available on-line. The filling time was 10 to 12 minutes. Most of the answers were 5-level Likert scales, i.e., Not important 1 - 5 Important (17), Not really 1 - 5 Very much (15), Never 1 - 5 Very often (2), ratings 1 - 5 (3) and enter nonegative number (7). One question was No - Yes, one question was predefined genre selection and some required a free-text answer (3).  The questionnaire is available at \url{www.ldos.si/ComodaTPBv01.html}. 
+
+% -iz vprašanj napovemo vedenje: žanr
+
+\subsection{Construction of criteria}\label{SubSec_CritConstr}
+
+We describe the ground-truth user behavior (see Fig. \ref{Fig_AggregModel}) with two criteria variables determined from the user’s known previous movie selections and ratings that they provided for the CoMoDa dataset \cite{CoMoDa2009}. Each of the rated movies in the dataset has three genres assigned to it. The first criteria variable is the genre scores denoted by $\gS(u, g)$ where $u$ is the user and $g\in\{\mbox{Drama}, \mbox{Action}, \mbox{Comedy}\}$ is the movie genre. It is defined as a ratio between the number of movies selected having the genre $g$ and the number of all the genre (movie) selections. For example, if a user $u$ has rated $45$ Drama movies and provides $91$ ratings for the database, we have $\gS(u, \mbox{Drama}) = 45/(3\cdot91)=0.165$, since every movie selection means a selection of three genres. 
+
+The next criteria variable we introduce is genre membership $\gC(u)$, where $u$ is the user. The indexes of the genres (also the behaviors in our case) are $\Id_{\mbox{\tiny Drama}}=1$, $\Id_{\mbox{\tiny Action}}=2$ and $\Id_{\mbox{\tiny Comedy}}=3$. $\gC(u)$ is defined as the index of the user preferred genre for which the user's expected rating is the highest. These expected scores are computed from the user's previous genre ratings. Here we assume that the user has rated mostly movies with the genres that he/she prefers since the ratings in the dataset are collected for movies that the user chose to see, and not based on our recommendation.  For example, if a user $u$ has rated $45$ Drama movies and his/her average rating for these movies is $3.82$, while the average ratings for Action and Comedy are lower, we set $\gC(u)=\Id_{\mbox{\tiny Drama}}=1$.
+% - opis odvisno spremenljivke: kaj pomeni 0.7 v rezultatu
+% - korelacije med kriterijem in ocenami filmov: yDrama in ratingi
+ 
+\subsection{Construction of predictor variables}\label{SubSec_PredVarConstr} 
+
+To allow the explanation of the contributions of the three beliefs (behavioral, normative and control, see Subsec.  \ref{SubSubSec_TPB} and Fig. \ref{Fig_AggregModel}) of the TPB we decided on the hierarchical model. As depicted in Fig. \ref{Fig_AggregModel}, we fit the following models:  
+\begin{enumerate}
+ \item Each of the three beliefs is regressed to a score showing the contribution of each of the beliefs to the selection of behavior (movie with a given genre). The criteria variable used is $\gS$ and this yields nine models. In these models the predictor variables are the answers to questions assigned to the modeled belief; 
+ \item Aggregated model: the prediction of the scores for each of the three beliefs obtained (in the previous step) are used as predictor variables to model the selected behavior. We introduce the aggregated model in order to estimate the relative effect of each of the three sub-models to the analyzed behavior. This is required when the next version of the TPB questionnaire is constructed (balancing among the end user effort when answering the questionnaire).
+\end{enumerate}
+The regression model we selected depends on the criteria variables used. For genre scores $\gS$ we selected multiple linear regression (MVR) as the first choice for linear continuous variable prediction model, and for genre membership we used linear discriminant analysis as an optimal linear classifier.
+ 
+Factors that affect the decision for each of selected genres may vary (e.g. for selecting drama the main actor may be important, while for selecting actions the movie director may be important). Hence, we decided to use multivariate models with different slopes, (i.e. different regression coefficients for each of the selected behaviors), which yields the triple $(s_D, s_A, s_C)$ computed by inserting the users' answers into the MVR models for the genres Drama, Action and Comedy, respectively.
+
+%According to our understanding of users movie selection mechanisms, factors affecting the decision for each of selected genres may vary. For instance, for selecting Drama a main actor may be the most important factor while for selecting Actions the movie director   may be the key for the decision. Therefore, we decided to use multivariate models with different slopes, that is for each of the selected behavior we get different regression coefficients. The score of the model is a triple $(s_D, s_A, s_C)$ computed by inserting users answers into MVR models for genres Drama, Action and Comedy, respectively.  
+
+
+\section{Results}\label{Sec_Results}
+
+%As already indicated, the selected behaviors that we modeled are the choices of three movie genres: Drama, Action and Comedy. 
+% In this section we list and briefly explain the results of the TPB models fitting the user data (acquired by the designed questionnaire).  
+For each of the six models that we fitted and tested (three models from attributes, one from norms and control, and the top level aggregate model) we fitted the MVR model (resulting in the model coefficients $\beta_k$ and the proportion of the explained variances $R^2$) and we performed the linear discriminant analysis (resulting in the discriminant weights $w_k$ and the separability $s$ in terms of the Fisher discriminant analysis \cite{RencherChristensen201207}). We do not report the results for all six models, but only for the cognitive attributes (selected for demonstrating how to interpret the results) and for the aggregate model which summarizes the whole TPB model. Since this is the initial version of the TPB questionnaire, the analysis of within-questionnaire correlations needs to be performed. We list maximal and typical correlations showing that our questionnaire needs to be upgraded to assure the required low level of correlations, see also \ref{SubSec_CorrStruct}.
+
+
+\subsection{Selected sub-model: the cognitive dimension of attitudes}\label{SubSec_CogAttr}
+
+This sub-model explains the role and contribution of the user's answers to eight questions $Q_1 - Q_8$ regarding the cognitive dimension of attitudes (i.e. the selection of a movie of one of the selected genres). In Fig. \ref{Fig_AggregModel}, which depicts the aggregated model, this sub-model is located on the top of the three sub-models explaining the user's cognitive dimension of attributes.
+
+The proportion of the explained variance for the cognitive dimension of attitudes is $R^2=0.48$. This high value allows us to interpret the beta coefficients of the model and determine the relative importance of the cognitive attitude in the overall mode as discussed in Subsec. \ref{SubSec_AggregateModel}.
+
+The normalized MVR model coefficients are listed at Tab. \ref{Tab_attitudeCog_MvRegress}. The maximal correlation between answers in a cognitive attitude group of question is $r=0.49$, typical ones are $r\sim 0.1$. The coefficient $\b_0$ 
+represents the offset of the resulting model, while the coefficients $\b_k$, $1\leq k \leq 8$ correspond to the questions $Q_k$. The significant $\b$ coefficients at risk level $\a=0.05$ are marked with $^*$. 
+\vspace*{-0.5em}
+\begin{table}[!h]
+  \centering
+   \input{Code/attitudeCog_MvRegress_F.tex}
+  \caption{MVR coefficients of the cognitive dimension of the attitudes predictors, $R^2 = 0.48$.}
+  \label{Tab_attitudeCog_MvRegress}
+\end{table}
+\vspace*{-1em}
+We observe that none of the coefficient that model the genre Drama is significant and therefore no conclusion can be made here. This is most probably due to the relatively low sample size used to fit the model. Regarding the genre Action, the coefficients representing $Q_2=${\it How important for you is the story in the movie?}, $Q_3=${\it How important for you is the movie's genre?} and $Q_6=${\it How important for you are the special effects?} are significant. Since $\b_2$ is negative, the users that do not care much about the story of the movie are more likely to select the Drama genre. The positive coefficients $\b_3$ and $\b_6$ show that the users that cared about the genre and the special effects are more likely to select the Drama genre. 
+
+In the same way we interpret the selection of Comedy movies. The large positive coefficient $\b_1=0.48$ representing $Q_1=${\it How important for you is the main actor of the movie?} indicates that the main actor is the most important factor in selecting the Comedy genre, while the coefficient $\b_2$ representing $Q_1=${\it How important for you is the story in the movie?} indicates that the story has very little relevance in selecting the Comedy genre. The coefficients $\b_6=-0.12$ and $\b_7$ representing the questions $Q_6=${\it How important for you are the special effects?} and $Q_7=${\it How important is an attractive trailer?}, respectively, indicate the low relevance of the special effects and of the trailer in the selection of the Comedy genre. 
+
+We analyzed the separability of the genre selection behaviors by LDA. The Fisher separability of the cognitive dimension of attitudes is $s = 0.81$ which means a moderate separability. The LDA coefficients separating the given pairs of genres are listed in Tab. \ref{Tab_attitudeCog_LDA}. The significant coefficients at the risk level $\a=0.05$ are labeled by $^*$. A significant contribution to the separation of the genres Drama and Action are obtained from $Q_3$ and $Q_6$ etc. 
+
+\vspace*{-0.5em}
+\begin{table}[!h]
+  \centering
+   \input{Code/attitudeCog_LDA_F.tex}
+  \caption{Linear discriminant coefficients of the cognitive dimension of attitudes predictors.}
+  \label{Tab_attitudeCog_LDA}
+\end{table}
+\vspace*{-0.5em}
+
+To summarize the interpretation, the questions and underlying decision factors that are relevant in both models (MVR and LDA) are regarded as the most important. These are the $Q_1$, $Q_3$ and $Q_6$ factors. The question $Q_1$ is the most important one since it is involved in the discriminant function with highest magnitudes. 
+%The behavior of selecting the Drama genre is not predicted well (no significant MVR coefficient) while the behavior of selecting the Comedy genre is predicted well. 
+
+\subsection{Aggregated TPB model}\label{SubSec_AggregateModel}
+
+We computed the scores predicted by each of the beliefs, norm and control models and used them as a stand-alone predictors for the three behaviors to build a hierarchical model. Each of the underlying models contributed three scores, one for each of the behaviors. The obtained aggregated model achieves a large proportion of explained variance $R^2=0.89$ and a good Fisher separability value of $1.008$. The aggregated model with $R^2$ of the sub-models are depicted in Table \ref{Tab_all_R2andSeps}.
+%Fig. \ref{Fig_AggregModel}. 
+
+%\vspace*{-1em}
+ \begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=9cm]{TpbTopH.pdf}
+   \caption[Fig_AggregModel]{Aggregated  model of genre selection, $R^2=0.89$.}
+   \label{Fig_AggregModel}
+ \end{center}
+ \end{figure}
+%\vspace*{-1em}
+
+We do not list and interpret the coefficients of MVR and LDA for the aggregated model here. We summarize the whole model by a list of the explained variances and Fisher separabilities in Tab. \ref{Tab_all_R2andSeps}. All the listed $R^2$ values including the aggregated $R^2=0.89$ are statistically significant and they indicate the relative weight of each sub-model in the movie selection of the genre. Behavior control contributed the least and the cognitive aspect of attributes contributed the most to the whole model. Note that for the sake of simplicity we did not regress behavior intentions but directly the behaviors themselves. The models allows to regress the intentions but this it is beyond the scope of this paper. The listed $R^2$ was estimated simply by direct estimation of the aggregated model's $R^2$.
+
+%\vspace*{-0.5em}
+\begin{table}[!h]
+  \centering
+   \input{Code/all_R2andSeps_F.tex}
+  \caption{Proportion of the Explained variance $R^2$ and Fisher separability for the aggregated model.}
+  \label{Tab_all_R2andSeps}
+\end{table}
+%\vspace*{-0.5em}
+
+% - hierarchy
+% - model selection
+
+\subsection{The correlation structure of the questionnaire}\label{SubSec_CorrStruct}
+In Subsec. \ref{SubSec_CogAttr} we listed maximal correlation among end user's answers regarding cognitive attitude. The value is much to high to allow the stable interpretation of estimated TPB model weights (betas). The same is true for the correlations of other groups of questions (emotion attitude maximal corr. $r=0.69$, behavior attitude maximal corr. $r=0.81$, subjective norm maximal corr. $r=0.65$ and behavior control maximal corr. $r=0.69$).
+
+On the other hand, the majority of these correlations are relatively low. The factor analysis applied separately to each three groups of questions (attitude, norms, controls) revealed a simple structure allowing us to remove a small number of highly correlated questions while preserving the assumed aspects of end users behavior. Due to the space limitations, we do not list factor matrices here.
+
+
+\section{Discussion}\label{Sec_Disc}
+
+The main goal of this paper was to introduce the Theory of Planned Behavior into user modeling. %The results suggested that the introduction of the TPB is likely to increase the accuracy of the RS. 
+Below we discuss the most relevant issues regarding the advantages, limitations, and further development of the RS backed with psychology-based research. 
+
+\vspace{0.6em}
+\noindent{\bf What are the benefits of implementing the TPB in user modeling?} One of the main reasons for the application of the TPB in a given domain is to further extend the understanding of underlying mechanisms that govern the way that users make their decisions. In the field of user modeling, this understanding relates to two aspects. The first one is understanding user adaptation as a whole (for example, what are the relevant factors in movie-item selection) and can be summarized from the results of the prediction model fitting. The second one is about the individual user’s mechanism (what are the individual factors in these selections for a given user) and we explain it from the individual user’s responses to the survey questions, together with the model-fitting results.
+
+%In the movie-genre selection example presented in this research, we selected the MVR \cite{CohenCohenWestAiken200208} and and the LDA \cite{RencherChristensen201207}. The magnitude and the sign of the regression coefficients of the fitted model are used to explain the relationship between the aspect addressed with this question (for example, {\it How important is peer opinion for you?}). A large magnitude indicates a stronger relationship and the sign indicates the direction of the relationship. This is the explanation of the movie-selection process as a whole. The explanation of the individual user’s behavior is based on his/her individual answers. If the magnitude of the regression coefficient for a given question is large and this user’s answer assigns a high importance to it, then this aspect has a relevant impact in his/her movie decision-making.
+
+%As seen from the reasoning in the previous paragraph, 
+The explanation of the TPB model is very dependent on the selected prediction model (MVR in our case). This means that models with little or no explanation power (black boxes) are of less interest in a TPB.% event if they could be applied and they would gain a higher prediction accuracy.
+
+
+\vspace{0.6em}
+\noindent{\bf When the TPB is applicable?}  For statistical and machine-learning reasons, the first requirement for the successful application of the TPB is that the predefined behaviors are separable by the selected model. In our case, genres that are not separable by the user’s attributes, norms and beliefs cannot be well modeled and the fitted model would provide misleading results.
+
+The separability of modeled behaviors also limits the number of these behaviors. It is clear that in practice several hundreds or thousands of behaviors cannot be separable (the user data acquisition would not tolerate it in the first place). This leads to an important limitation of the TPB in user modeling, meaning that the treatment of individual items cannot be defined as a behavior, but that these items must be grouped in a smaller number of groups or the definition of behaviors is based on a completely different aspect of user adaptation. 
+%For example, a predefined behavior can be a specific user-behavior pattern while interacting with the system that is relevant for the whole process of user adaptation.
+
+\vspace{0.6em}
+\noindent{\bf What are the options for integrating TPB models into a RS?} The role and integration of the TPB into a user-adaptation procedure is mainly determined by the definition of behaviors. As already indicated, user Actions related to individual content items as behaviors are not a good choice.
+
+\vspace{0.6em}
+\noindent{\bf What are the concerns of TPB user data acquisition?} The theory and practice of the TPB shows that the surveys required to fit the TPB model accurately enough are relatively long and they also demand a considerable effort from the respondent (end user) to provide relevant answers. In the context of user modeling, this means that the user-data acquisition is relatively intrusive. On the other hand, since the user’s attributes, norms and beliefs are changing very slowly with time, it is sufficient for the user to complete the survey only once a year. However, the sampling period may vary significantly according to the domain and also according to an individual user’s practice. In our example, attributes, norms and beliefs toward movie-genre selection may change faster for those users who see more movies in a given amount of time.
+
+\vspace{0.6em}
+\noindent{\bf Does the TPB allow cross-domain user modeling?} The cross-domain of user-adaptation techniques is of great interest. The question is can TPB models, in particular the Ajzen model, ensure cross-domain capabilities in terms that the attributes, norms and beliefs of the end user estimated in one domain (for example, movie selection) are at least in part valid for the other domain (for example, tourist-destination selection). Unfortunately, in general the answer is no. The reason for this is simply the fact that the survey used to estimate these attributes, norms and beliefs must be very specifically related to the domain of behaviors. For instance, the relevance of certain factors is asked for movies or for tourist destinations and not about some general user opinion common to both domains. However, the research on life-styles %\cite{Stadtmueller2013} 
+\cite{Dewberry2013} indicates that there are strong relations among human behaviors in different domains.
+
+%\vspace{0.6em}
+%\noindent{\bf What are the crucial decisions in the TPB model selection and fitting?} As outlined in Subsec. \ref{Sec_AzenProc}, the whole procedure is very dependent on the selected behavior. The next decision is, according to the domain knowledge, what are the relevant factors of the user’s beliefs about the behavior. After these factors are identified, the questionnaire can be designed and tested on a pilot set of users. A selection of the prediction model follows and the candidate models are evaluated in a pilot study. This selection also depends on the aim of the application of the TPB model, which is from busting the performance of the user-adaptation procedure to the explanation of the adaptation process itself.
+
+\vspace{0.6em}
+\noindent{\bf What are benefits of using the TPB as user modeling technique?} After the above listed considerations one could argue what are the benefits of the introduction of TPB that are not available from advanced statistics and machine learning algorithms. We see the following benefits of TPB in user modeling domain:
+
+1. {\it Explanation of the underlying mechanisms.} A deeper understanding of the processes accompanying user adaptation usually leads to more effective adaptation procedures, more appropriate evaluation measures and procedures, and fresh ideas about how to implement the user-adaptation results for end users; 
+% \item {\it Guidelines for the analyzed classes (called behaviors in TPB) definition.} The theory of the TPB together with the domain knowledge allows a description and definition of the behaviors that are decisive for the whole user-adaptation process. The ability of the TPB to take into account the adaptation domain specifics is of crucial importance here, since the later development of user-adaptation techniques showed that the effective adaptation as well as its performance evaluation are very much domain specific; 
+
+2. {\it Guidelines for survey-question formulations.} According to the previous point reasoning, the TPB further provides explicit guidelines for user-data-acquisition survey construction. It is important to note that there is a large number of data-driven studies in several domains that support the theory of the TPB and the description of behavioral, normative and control beliefs. This allows us to construct more effective surveys, resulting in more accurate user data at the same level of intrusion;  
+
+3.  {\it Study of cross-domain user adaptation.} Cross-domain user adaptation is one way to reduce the intrusion of user-data acquisition and to design more effective user-adaptation techniques. As already indicated, no cross-domain of the estimated beliefs in the TPB is guaranteed. However, the studies related to life-styles shows the potential to link the correlated user-behavior patterns in a way that allows us to make conclusions about end-user beliefs from the original to the correlated domain. This is related to our future work plans.
+
+
+\section{Conclusion and further work}\label{Sec_ConcAndFW}
+
+The work presented in this paper aims at establishing the relevance of the psychological human-decision modeling Theory of Planned Behavior (TPB) into the field of user modeling. The study contributes to the models that are applicable in user modeling, in particular to the explanation of these models.
+
+Our results show that the application of the TPB in the area of recommender systems allows a further insight into the underlying process of the user’s decision making, i.e., into factors that affect these decisions. These insights can be used to address several issues, such as effective user-data acquisition, understanding and mitigating the reasons for unacceptable recommendations, etc. As an important part of this research performed by an interdisciplinary team, including engineers, mathematicians, and psychologists, are the guidelines for the future applications of the TPB in different areas of user modeling. They include behavior selection, user-questionnaire construction, criteria variable construction, regression-model selection and fitting, and an explanation of the obtained results.
+
+Despite the limitations of the proposed modeling, our study showed that such modeling improves our understanding of the user-adaptation process. It is not meant as a replacement for the existing user-modeling models (for example, Matrix Factorization in movie recommendations) but as a predictor of end-user behaviors that affects the whole process. Such behaviors influence the selection of the device he/she uses to consume the recommended service, etc. Furthermore, in the discussion section we addressed several issues relevant for the application of the TPB in the user-modeling domain.
+
+The obvious further work is the application of the upgraded TPB questionnaire, confirming its validity and reporting the TPB model results in terms of the explanation of why users selects movie genres as they do. In this way, we allow the next development steps as indicated in the discussion.
+
+
+
+% 
+% 
+% 
+% \begin{figure}[h!]
+% \begin{center}
+%   \includegraphics[trim = 2cm 8cm 2cm 6cm, clip,width=\columnwidth]{valence.pdf}
+%   \caption[labelInTOC]{figureCaption}
+%   \label{fig:valence}
+% \end{center}
+% \end{figure}
+
+
+%\usepackage{graphics} is needed for \includegraphics
+%\begin{figure}[h!]
+%\begin{center}
+ % \includegraphics[trim = 2cm 1cm 2cm 1cm, clip,width=\columnwidth]{graphicalabstract.pdf}
+ % \caption[labelInTOC]{Overview of the paper: from the rating matrix we calculated the users' and items' latent factors. Then we analyzed the affective properties of items and the personality properties of users that lie at the extremes of the first two latent factors.}
+ % \label{fig:graphical_abstract}
+%\end{center}
+%\end{figure}
+
+
+
+\bibliographystyle{splncs03}
+\bibliography{rs_allbib}
+
+\end{document}
+
+
+%% ======================================================================
+% BUFFER
+
+\subsection{OLD: Results: Behavior model}\label{SubSec_ResModelAnalyis}
+
+In this subsection, we list and explain behaviour model coeficients for each subgroup of questions separatelly. 
+
+\begin{table}[!h]
+  \centering
+   \input{Code/attitudeCog_Logit.tex}
+  \caption{Logit regression coefficients of cognitive attitude toward the behaviour predictors}
+  \label{Tab_attitudeCog_Logit}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+   \input{Code/attitudeEmot_Logit.tex}
+  \caption{Logit regression coefficients of emotive attitude toward the behaviour predictors}
+  \label{Tab_attitudeEmot_Logit}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+   \input{Code/attitudeBehA_Logit.tex}
+  \caption{Logit regression coefficients of behavioral attitude toward the behaviour predictors, part one}
+  \label{Tab_attitudeBehA_Logit}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+   \input{Code/attitudeBehB_Logit.tex}
+  \caption{Logit regression coefficients of behavioral attitude toward the behaviour predictors, part two}
+  \label{Tab_attitudeBehB_Logit}
+\end{table}
+
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeEmot_Logit.tex}
+%  \caption{Logit regression coefficients of emotive attitude toward the behaviour predictors}
+%  \label{Tab_attitudeEmot_Logit}
+%\end{table}
+
+\begin{table}[!h]
+  \centering
+   \input{Code/control_Logit.tex}
+  \caption{Logit regression coefficients of emotive attitude toward the behaviour predictors}
+  \label{Tab_control_Logit}
+\end{table}
+
+
+%
+%\subsubsection{Recommender system models and algorithms}
+%
+%Colaborative, content-based, hybrid
+%
+%% http://www.cs.carleton.edu/cs_comps/0607/recommend/recommender/algorithms.html  - literature below
+%
+%% http://www.slideshare.net/xlvector/recommender-system-algorithm-and-architecture-13098396
+%
+%A comprehensive presentation of various aspects of recommender systems are given in \cite{Konstan2012}. 
+%
+%A very popular and well studied RS algorithm is matrix factorization \cite{koren2009matrix}.   
+%
+%Several known procedures and algorithms form the field of Machine learning \cite{} and multivariate statistics are used in RS. 
+%
+%
+%\subsubsection{Multimedia items recommendation systems}
+
+
+
+%\subsection{Results: Factor analysis}\label{SubSec_ResFacAnalyis}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeCog_FactorAn.tex}
+%  \caption{Factor matrix of cognitive attitude toward the behaviour predictors}
+%  \label{Tab_attitudeCog_FactorAn}
+%\end{table}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeEmot_FactorAn.tex}
+%  \caption{Factor matrix of cognitive attitude toward the behaviour predictors}
+%  \label{Tab_attitudeEmot_FactorAn}
+%\end{table}
+%
+%%\begin{table}[!h]
+%%  \centering
+%%   \input{Code/attitudeBeh_FactorAn.tex}
+%%  \caption{Factor matrix of cognitive attitude toward the behaviour predictors}
+%%  \label{Tab_attitudeBeh_FactorAn}
+%%\end{table}
+%
+%%\begin{table}[!h]
+%%  \centering
+%%   \input{Code/norms_FactorAn.tex}
+%%  \caption{Factor matrix of cognitive attitude toward the behaviour predictors}
+%%  \label{Tab_FactorAn}
+%%\end{table}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/control_FactorAn.tex}
+%  \caption{Factor matrix of cognitive attitude toward the behaviour predictors}
+%  \label{Tab_control_FactorAn}
+%\end{table}
+
+
+%=====================
+%
+%\subsection{Testing models}\label{SubSec_TestModels}
+%
+%As indicated in previous subsection, we report the modeling of each beliefs separately and the hierarchical model where scores regressed from beliefs were used as predictor variables. For each model we report selected regression coefficients when necessary for the interpretation, variance explained ($R^2$), selected linear discriminant coefficients and separability in terms of Fisher discriminant analysis \cite{RencherChristensen201207}.
+%
+
+%
+%
+%
+
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeEmot_MvRegress.tex}
+%  \caption{Multivariate regression coefficients of emotive dimension of attitudes predictors, $R^2 = 0.46$.}
+%  \label{Tab_attitudeEmot_MvRegress}
+%\end{table}
+%
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeEmot_LDA.tex}
+%  \caption{Linear discriminant coefficients of emotive dimension of attitudes predictors.}
+%  \label{Tab_attitudeEmot_LDA}
+%\end{table}
+%
+%
+
+%
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeBeh_MvRegress.tex}
+%  \caption{Multivariate regression coefficients of behavioral dimension of attitudes predictors, $R^2 = 0.37$.}
+%  \label{Tab_attitudeBehA_MvRegress}
+%\end{table}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/attitudeBeh_LDA.tex}
+%  \caption{Linear discriminant coefficients of behavioral dimension of attitudes predictors.}
+%  \label{Tab_attitudeBehA_LDA}
+%\end{table}
+%
+%
+%
+%\subsubsection{Subjective norm}\label{SubSec_Res_Norms}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/norms_MvRegress.tex}
+%  \caption{Multivariate regression coefficients of subjective norm predictors, $R^2 = 0.28$.}
+%  \label{Tab_norms_MvRegress}
+%\end{table}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/norms_LDA.tex}
+%  \caption{Linear discriminant coefficients of subjective norms predictors.}
+%  \label{Tab_norms_LDA}
+%\end{table}
+%
+%
+%\subsubsection{Perceived behavioral control}\label{SubSec_Res_Control}
+%
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/control_MvRegress.tex}
+%  \caption{Multivariate regression coefficients of emotive dimension of attitudes predictors, $R^2 = 0.26$.}
+%  \label{Tab_control_MvRegress}
+%\end{table}
+%
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/control_LDA.tex}
+%  \caption{Linear discriminant coefficients of emotive dimension of attitudes predictors.}
+%  \label{Tab_control_LDA}
+%\end{table}
+%
+%
+%\subsubsection{Hierarchical model}\label{SubSec_Res_HierarModel}
+%
+
+
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/top_MvRegress.tex}
+%  \caption{Multivariate regression coefficients of linear model's scores as predictors, $R^2 = 0.89$.}
+%  \label{Tab_top_MvRegress}
+%\end{table}
+
+
+%\begin{table}[!h]
+%  \centering
+%   \input{Code/top_LDA.tex}
+%  \caption{Linear discriminant coefficients of linear model's scores.}
+%  \label{Tab_top_LDA}
+%\end{table}
